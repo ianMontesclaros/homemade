@@ -8,6 +8,8 @@ Homemade is a VanillaJS web app where users can search, upload, and bookmark hom
 
 1. Recipe Search: Users can search for recipes by entering a recipe name or an ingredient into the search bar.
 
+![Recipe Search](https://github.com/user-attachments/assets/cf05b8a2-de18-4bdf-a027-3db7389ca05e)
+
 2. Search Results: A list of recipes are displayed based on the user's query with the recipe's image, name, and publisher. 
 
 3. Recipe Details: Clicking on a recipe shows details about the selected recipe, including cooking time, serving size, ingredients, and preparation instructions.
