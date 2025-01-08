@@ -16,16 +16,12 @@ const controlRecipes = async function () {
     if (!id) return;
     recipeView.renderSpinner();
 
-    // update results view to mark selected search result
     resultsView.update(model.getSearchResultsPage());
 
-    // update bookmarks view
     bookmarksView.update(model.state.bookmarks);
 
-    // loading recipe
     await model.loadRecipe(id);
 
-    // rendering recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
@@ -36,17 +32,13 @@ const controlSearchResults = async function () {
   try {
     resultsView.renderSpinner();
 
-    // get search query
     const query = searchView.getQuery();
     if (!query) return;
 
-    // load search results
     await model.loadSearchResults(query);
 
-    // render results
     resultsView.render(model.getSearchResultsPage());
 
-    // render initial pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
@@ -54,31 +46,23 @@ const controlSearchResults = async function () {
 };
 
 const controlPagination = function (goToPage) {
-  // render new results
   resultsView.render(model.getSearchResultsPage(goToPage));
 
-  // render new pagination buttons
   paginationView.render(model.state.search);
 };
 
 const controlServings = function (newServings) {
-  // update the recipe servings (in state)
   model.updateServings(newServings);
 
-  // update the recipe view
-  // recipeView.render(model.state.recipe);
   recipeView.update(model.state.recipe);
 };
 
 const controlAddBookmark = function () {
-  // add/remove bookmark
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe.id);
 
-  // update recipe view
   recipeView.update(model.state.recipe);
 
-  // render bookmarks
   bookmarksView.render(model.state.bookmarks);
 };
 
@@ -88,22 +72,16 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
-    // show loading spinner
     addRecipeView.renderSpinner();
 
-    // upload the new recipe data
     await model.uploadRecipe(newRecipe);
 
-    // render recipe
     recipeView.render(model.state.recipe);
 
-    // success message
     addRecipeView.renderMessage();
 
-    // render bookmark view
     bookmarksView.render(model.state.bookmarks);
 
-    // change ID in URL
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
   } catch (err) {
     console.error('💥', err);
